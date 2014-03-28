@@ -112,7 +112,7 @@ class KTV:
         return flist
 
     def add_song(self, mrl):
-        self.plist.add_media(mrl.)
+        self.plist.add_media(mrl)
         if not self.player.is_playing() and len(self.plist) == 1:
             self.next()
 
@@ -128,7 +128,7 @@ class KTV:
             while True:
                 option = raw_input("Select: ")
                 if option.isdigit() and 0 <= int(option) < len(results):
-                    self.add_song(results[int(option)])
+                    self.add_song(results[int(option)].decode("mbcs").encode("utf-8"))
                 elif option == '':
                     break
                 else:
@@ -144,7 +144,7 @@ class KTV:
         # print 'count: %s' % self.plist.count()
         print 
         print "Playlists:"
-        self.show_filelist([(media.get_mrl()) for media in self.plist], self.get_current_index())
+        self.show_filelist([decode_mrl(media.get_mrl()) for media in self.plist], self.get_current_index())
 
     def show_filelist(self, lst, start=0):
         for (counter, item) in enumerate(lst):
